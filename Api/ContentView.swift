@@ -35,7 +35,8 @@ struct ContentView: View {
             
             .padding()
             .onAppear(){
-                pokemonList.getPokemonList()
+                //pokemonList.getPokemonList()
+                pokemonList.getPokemonListWithoutDecoder()
             }
         }
     }
