@@ -9,9 +9,10 @@ import SwiftUI
 
 @main
 struct ApiApp: App {
+    var sharedViewModel = PokemonListViewModel()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView().environmentObject(sharedViewModel)
         }
     }
 }

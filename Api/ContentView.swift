@@ -8,19 +8,41 @@
 import SwiftUI
 
 struct ContentView: View {
+   // @StateObject var pokemonList = PokemonListViewModel()
+    @EnvironmentObject var pokemonList : PokemonListViewModel
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        NavigationView(){
+            VStack {
+                
+                Text("\(pokemonList.pokemon.count)")
+                Text(pokemonList.pokemon.next)
+                Text(pokemonList.pokemon.previous ?? "")
+                
+                
+                List(){
+                    ForEach(pokemonList.pokemon.results, id: \.self){  pokemon in
+                        
+                        NavigationLink(destination: PokemonDetailsView()){
+                            VStack{
+                                Text(pokemon.name)
+                                Text(pokemon.url)
+                            }
+                        }
+                    }
+                }
+            }
+            
+            .padding()
+            .onAppear(){
+                pokemonList.getPokemonList()
+            }
         }
-        .padding()
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView()  .environmentObject(PokemonListViewModel())
     }
 }
