@@ -12,7 +12,7 @@ class PokemonListViewModel : ObservableObject {
     @Published var pokemon: Pokemon
     
     init(){
-        self.pokemon = Pokemon(count: -1, next: "" , previous: "" , results: [])
+        self.pokemon = Pokemon(count: -1, siguiente: "" , previous: "" , results: [])
     }
     
 
@@ -67,7 +67,7 @@ class PokemonListViewModel : ObservableObject {
                                 results.append(result)
                        
                         }
-                        self.pokemon = Pokemon(count: count, next: next , previous: previous , results: results )
+                        self.pokemon = Pokemon(count: count, siguiente: next , previous: previous , results: results )
                         
                     } catch let error {
                         print("Error al decodificar JSON \(error)")
@@ -154,6 +154,7 @@ class PokemonListViewModel : ObservableObject {
                         let decoded = try JSONDecoder().decode( [MODELO_ARRAY] .self, from: data)
                         */
                         self.pokemon = decoded
+                        
                     } catch let error {
                         print("Error al decodificar JSON \(error)")
                         return

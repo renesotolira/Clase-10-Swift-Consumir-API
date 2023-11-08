@@ -10,7 +10,7 @@ import SwiftUI
 struct PokemonDetailsView: View {
     @EnvironmentObject var pokemonList : PokemonListViewModel
     var body: some View {
-        Text(pokemonList.pokemon.next)
+        Text(pokemonList.pokemon.siguiente)
     }
 }
 

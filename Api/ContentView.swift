@@ -16,7 +16,7 @@ struct ContentView: View {
             VStack {
                 
                 Text("\(pokemonList.pokemon.count)")
-                Text(pokemonList.pokemon.next)
+                Text(pokemonList.pokemon.siguiente)
                 Text(pokemonList.pokemon.previous ?? "")
                 
                 
@@ -36,7 +36,7 @@ struct ContentView: View {
             .padding()
             .onAppear(){
                 //pokemonList.getPokemonList()
-                pokemonList.getPokemonListWithoutDecoder()
+                pokemonList.getPokemonList()
             }
         }
     }

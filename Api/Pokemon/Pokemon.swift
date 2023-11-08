@@ -9,9 +9,14 @@ import Foundation
 
 struct Pokemon: Decodable {
     let count: Int
-    let next: String
+    let siguiente: String
     let previous: String?
     let results: [Results]
+    
+    private enum CodingKeys: String, CodingKey {
+        case count, results , previous// campos que son iguales
+        case siguiente = "next" //campo a renombrar
+    }
 }
 
 struct Results: Decodable, Hashable{
