@@ -17,18 +17,33 @@ struct ContentView: View {
             Text("\(pokemonList.pokemon.count)")
             Text(pokemonList.pokemon.next ?? "")
             Text(pokemonList.pokemon.previous ?? "")
-
+            
             List(pokemonList.pokemon.results) { pokemon in
-                VStack(alignment: .leading) {
-                    Text(pokemon.name)
-                        .font(.headline)
-                    Text(pokemon.url)
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+                
+                HStack{
+                    AsyncImage(url: pokemonList.sprites[pokemon.id]){ image in
+                        
+                        image.resizable().scaledToFit()
+                        
+                    } placeholder: {
+                        ProgressView()
+                    }
+                    .frame(width: 60, height: 60)
+                    .font(.headline)
+                    
+                    VStack(alignment: .leading) {
+                        Text(pokemon.name.capitalized)
+                            .font(.headline)
+                        Text(pokemon.url)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                    
+                }.task {
+                    await pokemonList.loadSprite(for: pokemon)
                 }
             }
         }
-        .padding()
         .task {
             await pokemonList.getPokemonList()
         }

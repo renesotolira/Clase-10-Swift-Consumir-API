@@ -12,9 +12,32 @@ import Observation
 @Observable
 final class PokemonListViewModel {
     var pokemon = Pokemon(count: -1, next: nil, previous: nil, results: [])
+    var sprites: [String:URL] = [:]
+    
+    func loadSprite(for item: Pokemon.Results) async{
+        print("URl a buscar es \(item.url)")
+        guard sprites[item.id] == nil, let detailURL = URL(string: item.url) else {
+            return
+        }
+        
+        do{
+            let (data, _) = try await URLSession.shared.data(from: detailURL)
+            let detail = try JSONDecoder().decode(PokemonDetail.self, from: data)
+            print("detail image \(detail)")
+            
+            if let front = detail.sprites.front_default, let imageURL = URL(string: front){
+                sprites[item.id] = imageURL
+            }
+            
+        }catch{
+            if (error as? URLError)?.code != .cancelled {
+               print("Error al cargar la imagen: \(error)")
+            }
+        }
+    }
     
     func getPokemonList() async{
-        let endPoint = "https://pokeapi.co/api/v2/pokemon"
+        let endPoint = "https://pokeapi.co/api/v2/pokemon?limit=1000"
         
         guard let apiURL = URL(string: endPoint) else {
             print("Url no válida o no definida")

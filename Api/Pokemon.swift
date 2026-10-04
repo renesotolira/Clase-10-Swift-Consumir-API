@@ -20,3 +20,5 @@ struct Pokemon: Decodable {
         var id: String { url }
     }
 }
+
+
